@@ -3,6 +3,7 @@
 #include <map>
 #include <cmath>
 #include <vector>
+#include <cstdint>
 #include "../src/global_data_struct.h"
 #include "../src/parse_fill.h"
 

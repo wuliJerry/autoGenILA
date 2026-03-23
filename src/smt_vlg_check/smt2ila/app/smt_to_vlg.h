@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <ilang/ilang++.h>
 #include <ilang/vtarget-out/vtarget_gen.h>
 #include <iostream>

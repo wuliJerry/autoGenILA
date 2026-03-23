@@ -10,6 +10,7 @@
 #include <set>
 #include <utility>
 #include <unordered_map>
+#include <cstdint>
 
 namespace funcExtract {
 

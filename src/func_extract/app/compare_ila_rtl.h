@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include <cstdint>
 
 uint32_t to_int(std::string value);
 

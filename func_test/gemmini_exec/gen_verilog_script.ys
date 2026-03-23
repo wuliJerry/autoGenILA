@@ -1,0 +1,31 @@
+# Yosys script to flatten Gemmini ExecuteController
+# Contains the full 16x16 systolic array (Mesh), transpose logic, and command queues
+
+read_verilog -sv ./RTL/MacUnit.sv
+read_verilog -sv ./RTL/PE_256.sv
+read_verilog -sv ./RTL/PE.sv
+read_verilog -sv ./RTL/Tile.sv
+read_verilog -sv ./RTL/Mesh.sv
+read_verilog -sv ./RTL/AlwaysOutTransposer.sv
+read_verilog -sv ./RTL/MeshWithDelays.sv
+read_verilog -sv ./RTL/ram_5x88.sv
+read_verilog -sv ./RTL/ram_6x8.sv
+read_verilog -sv ./RTL/Queue5_ComputeCntlSignals.sv
+read_verilog -sv ./RTL/Queue6_TagWithIdAndTotalRows.sv
+read_verilog -sv ./RTL/TagQueue.sv
+read_verilog -sv ./RTL/MultiHeadedQueue.sv
+read_verilog -sv ./RTL/MultiHeadedQueue_1.sv
+read_verilog -sv ./RTL/TransposePreloadUnroller.sv
+read_verilog -sv ./RTL/ExecuteController.sv
+
+prep -top ExecuteController -flatten
+
+hierarchy -check
+proc
+memory -nomap
+memory_dff
+memory_collect
+memory_map
+proc
+opt_clean
+write_verilog -nodec ./design.v

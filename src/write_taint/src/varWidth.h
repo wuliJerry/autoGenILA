@@ -1,5 +1,6 @@
 #ifndef VAR_WIDTH_H
 #define VAR_WIDTH_H
+#include <cstdint>
 #include <unordered_map>
 #include <string>
 #include <utility>

@@ -8,6 +8,8 @@ find_package (LLVM 14 REQUIRED)
 # How to force use of a particular LLVM build:
 # find_package (LLVM 14 REQUIRED PATHS /my/llvm/installation/ NO_DEFAULT_PATH)
 
+find_package (MLIR REQUIRED CONFIG)
+
 
 aux_source_directory(./src SRC_DIR)
 
@@ -24,19 +26,26 @@ set(SIM_GEN sim_gen)
 set(CMP cmp)
 set(TEST_GEN test_gen)
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -Og -Wall -g ")
+set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -Og -Wall -g")
 add_compile_options(-rdynamic -fPIC)
 
 
 include_directories(${LLVM_INCLUDE_DIRS})
+include_directories(${MLIR_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 
 llvm_map_components_to_libnames(llvm_libs support core irreader)
+
+# Use the shared MLIR library to avoid duplicate LLVM command-line option
+# registration that occurs when linking both LLVM and MLIR static libraries.
+set(mlir_libs MLIR)
+
 add_library(FuncExtractLib ${SRC_DIR})
 
 #target_link_libraries(FuncExtractLib ${Z3_LIBRARIES})
 target_link_libraries(FuncExtractLib glog::glog)
 target_link_libraries(FuncExtractLib ${llvm_libs})
+target_link_libraries(FuncExtractLib ${mlir_libs})
 target_link_libraries(FuncExtractLib TaintGenLib)
 
 add_executable(${VERILOG_EXE} ./app/func_extract.cpp)

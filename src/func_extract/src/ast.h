@@ -7,6 +7,7 @@
 #include <cassert>
 #include <regex>
 #include <algorithm>
+#include <cstdint>
 #include "../../live_analysis/src/taint_gen.h"
 #include "../../live_analysis/src/helper.h"
 

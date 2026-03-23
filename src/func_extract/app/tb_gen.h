@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
+#include <cstdint>
 
 extern std::ofstream g_output;
 extern uint32_t g_cycleLen;

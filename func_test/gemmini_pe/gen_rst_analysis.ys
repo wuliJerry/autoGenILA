@@ -1,0 +1,10 @@
+# Yosys script to generate reset VCD for Gemmini PE (Tile wrapper)
+
+read_verilog -sv ./RTL/MacUnit.sv
+read_verilog -sv ./RTL/PE_256.sv
+read_verilog -sv ./RTL/Tile.sv
+read_verilog -sv ./RTL/TileWithReset.sv
+
+prep -top TileWithReset -flatten
+
+sim -clock clock -reset reset -rstlen 50 -vcd ./rst.vcd

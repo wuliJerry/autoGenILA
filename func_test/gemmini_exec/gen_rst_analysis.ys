@@ -1,0 +1,22 @@
+# Yosys script to generate reset VCD for ExecuteController
+
+read_verilog -sv ./RTL/MacUnit.sv
+read_verilog -sv ./RTL/PE_256.sv
+read_verilog -sv ./RTL/PE.sv
+read_verilog -sv ./RTL/Tile.sv
+read_verilog -sv ./RTL/Mesh.sv
+read_verilog -sv ./RTL/AlwaysOutTransposer.sv
+read_verilog -sv ./RTL/MeshWithDelays.sv
+read_verilog -sv ./RTL/ram_5x88.sv
+read_verilog -sv ./RTL/ram_6x8.sv
+read_verilog -sv ./RTL/Queue5_ComputeCntlSignals.sv
+read_verilog -sv ./RTL/Queue6_TagWithIdAndTotalRows.sv
+read_verilog -sv ./RTL/TagQueue.sv
+read_verilog -sv ./RTL/MultiHeadedQueue.sv
+read_verilog -sv ./RTL/MultiHeadedQueue_1.sv
+read_verilog -sv ./RTL/TransposePreloadUnroller.sv
+read_verilog -sv ./RTL/ExecuteController.sv
+
+prep -top ExecuteController -flatten
+
+sim -clock clock -reset reset -rstlen 50 -vcd ./rst.vcd

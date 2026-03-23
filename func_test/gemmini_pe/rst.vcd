@@ -1,0 +1,330 @@
+$version Yosys $end
+$scope module TileWithReset $end
+$var wire 5 n82 tile_inst.tile_0_0.shift_offset [4:0] $end
+$var wire 20 n81 tile_inst.tile_0_0.mac_unit.io_out_d [19:0] $end
+$var wire 32 n80 tile_inst.tile_0_0.mac_unit.io_in_c [31:0] $end
+$var wire 8 n79 tile_inst.tile_0_0.mac_unit.io_in_b [7:0] $end
+$var wire 8 n78 tile_inst.tile_0_0.mac_unit.io_in_a [7:0] $end
+$var wire 16 n77 tile_inst.tile_0_0.mac_unit._io_out_d_T [15:0] $end
+$var reg 1 n76 tile_inst.tile_0_0.last_s $end
+$var wire 1 n75 tile_inst.tile_0_0.io_out_valid $end
+$var wire 1 n74 tile_inst.tile_0_0.io_out_last $end
+$var wire 3 n73 tile_inst.tile_0_0.io_out_id [2:0] $end
+$var wire 5 n72 tile_inst.tile_0_0.io_out_control_shift [4:0] $end
+$var wire 1 n71 tile_inst.tile_0_0.io_out_control_propagate $end
+$var wire 1 n70 tile_inst.tile_0_0.io_out_control_dataflow $end
+$var wire 20 n69 tile_inst.tile_0_0.io_out_c [19:0] $end
+$var wire 20 n68 tile_inst.tile_0_0.io_out_b [19:0] $end
+$var wire 8 n67 tile_inst.tile_0_0.io_out_a [7:0] $end
+$var wire 1 n66 tile_inst.tile_0_0.io_in_valid $end
+$var wire 1 n65 tile_inst.tile_0_0.io_in_last $end
+$var wire 3 n64 tile_inst.tile_0_0.io_in_id [2:0] $end
+$var wire 20 n63 tile_inst.tile_0_0.io_in_d [19:0] $end
+$var wire 5 n62 tile_inst.tile_0_0.io_in_control_shift [4:0] $end
+$var wire 1 n61 tile_inst.tile_0_0.io_in_control_propagate $end
+$var wire 1 n60 tile_inst.tile_0_0.io_in_control_dataflow $end
+$var wire 20 n59 tile_inst.tile_0_0.io_in_b [19:0] $end
+$var wire 8 n58 tile_inst.tile_0_0.io_in_a [7:0] $end
+$var wire 1 n57 tile_inst.tile_0_0.io_bad_dataflow $end
+$var wire 1 n56 tile_inst.tile_0_0.clock $end
+$var reg 32 n55 tile_inst.tile_0_0.c2 [31:0] $end
+$var reg 32 n54 tile_inst.tile_0_0.c1 [31:0] $end
+$var wire 20 n53 tile_inst.tile_0_0._mac_unit_io_out_d [19:0] $end
+$var wire 32 n52 tile_inst.tile_0_0._io_out_c_point_five_T_8 [31:0] $end
+$var wire 32 n51 tile_inst.tile_0_0._io_out_c_point_five_T_3 [31:0] $end
+$var wire 32 n50 tile_inst.tile_0_0._io_out_c_T_2 [31:0] $end
+$var wire 32 n49 tile_inst.tile_0_0._io_out_c_T_13 [31:0] $end
+$var wire 32 n48 tile_inst.tile_0_0._io_out_c_T_11 [31:0] $end
+$var wire 32 n47 tile_inst.tile_0_0._io_out_c_T [31:0] $end
+$var wire 32 n46 tile_inst.tile_0_0._GEN_3 [31:0] $end
+$var wire 32 n45 tile_inst.tile_0_0._GEN_2 [31:0] $end
+$var wire 32 n44 tile_inst.tile_0_0._GEN_1 [31:0] $end
+$var wire 32 n43 tile_inst.tile_0_0._GEN_0 [31:0] $end
+$var wire 32 n42 tile_inst.tile_0_0._GEN [31:0] $end
+$var wire 1 n41 tile_inst.io_out_valid_0 $end
+$var wire 1 n40 tile_inst.io_out_last_0 $end
+$var wire 3 n39 tile_inst.io_out_id_0 [2:0] $end
+$var wire 5 n38 tile_inst.io_out_control_0_shift [4:0] $end
+$var wire 1 n37 tile_inst.io_out_control_0_propagate $end
+$var wire 1 n36 tile_inst.io_out_control_0_dataflow $end
+$var wire 20 n35 tile_inst.io_out_c_0 [19:0] $end
+$var wire 20 n34 tile_inst.io_out_b_0 [19:0] $end
+$var wire 8 n33 tile_inst.io_out_a_0 [7:0] $end
+$var wire 1 n32 tile_inst.io_in_valid_0 $end
+$var wire 1 n31 tile_inst.io_in_last_0 $end
+$var wire 3 n30 tile_inst.io_in_id_0 [2:0] $end
+$var wire 20 n29 tile_inst.io_in_d_0 [19:0] $end
+$var wire 5 n28 tile_inst.io_in_control_0_shift [4:0] $end
+$var wire 1 n27 tile_inst.io_in_control_0_propagate $end
+$var wire 1 n26 tile_inst.io_in_control_0_dataflow $end
+$var wire 20 n25 tile_inst.io_in_b_0 [19:0] $end
+$var wire 8 n24 tile_inst.io_in_a_0 [7:0] $end
+$var wire 1 n23 tile_inst.io_bad_dataflow $end
+$var wire 1 n22 tile_inst.clock $end
+$var wire 1 n21 reset $end
+$var wire 1 n20 io_out_valid_0 $end
+$var wire 1 n19 io_out_last_0 $end
+$var wire 3 n18 io_out_id_0 [2:0] $end
+$var wire 5 n17 io_out_control_0_shift [4:0] $end
+$var wire 1 n16 io_out_control_0_propagate $end
+$var wire 1 n15 io_out_control_0_dataflow $end
+$var wire 20 n14 io_out_c_0 [19:0] $end
+$var wire 20 n13 io_out_b_0 [19:0] $end
+$var wire 8 n12 io_out_a_0 [7:0] $end
+$var wire 1 n11 io_in_valid_0 $end
+$var wire 1 n10 io_in_last_0 $end
+$var wire 3 n9 io_in_id_0 [2:0] $end
+$var wire 20 n8 io_in_d_0 [19:0] $end
+$var wire 5 n7 io_in_control_0_shift [4:0] $end
+$var wire 1 n6 io_in_control_0_propagate $end
+$var wire 1 n5 io_in_control_0_dataflow $end
+$var wire 20 n4 io_in_b_0 [19:0] $end
+$var wire 8 n3 io_in_a_0 [7:0] $end
+$var wire 1 n2 io_bad_dataflow $end
+$var wire 1 n1 clock $end
+$upscope $end
+$enddefinitions $end
+#0
+bx n1
+b0 n2
+bxxxxxxxx n3
+bxxxxxxxxxxxxxxxxxxxx n4
+bx n5
+bx n6
+bxxxxx n7
+bxxxxxxxxxxxxxxxxxxxx n8
+bxxx n9
+bx n10
+bx n11
+bxxxxxxxx n12
+bxxxxxxxxxxxxxxxxxxxx n13
+bxxxxxxxxxxxxxxxxxxxx n14
+bx n15
+bx n16
+bxxxxx n17
+bxxx n18
+bx n19
+bx n20
+b1 n21
+bx n22
+b0 n23
+bxxxxxxxx n24
+bxxxxxxxxxxxxxxxxxxxx n25
+bx n26
+bx n27
+bxxxxx n28
+bxxxxxxxxxxxxxxxxxxxx n29
+bxxx n30
+bx n31
+bx n32
+bxxxxxxxx n33
+bxxxxxxxxxxxxxxxxxxxx n34
+bxxxxxxxxxxxxxxxxxxxx n35
+bx n36
+bx n37
+bxxxxx n38
+bxxx n39
+bx n40
+bx n41
+b000000000000000000000000000xxxxx n42
+b000000000000000000000000000xxxxx n43
+b000000000000000000000000000xxxxx n44
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n45
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n46
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n47
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n48
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n49
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n50
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n51
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n52
+bxxxxxxxxxxxxxxxxxxxx n53
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n54
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n55
+bx n56
+b0 n57
+bxxxxxxxx n58
+bxxxxxxxxxxxxxxxxxxxx n59
+bx n60
+bx n61
+bxxxxx n62
+bxxxxxxxxxxxxxxxxxxxx n63
+bxxx n64
+bx n65
+bx n66
+bxxxxxxxx n67
+bxxxxxxxxxxxxxxxxxxxx n68
+bxxxxxxxxxxxxxxxxxxxx n69
+bx n70
+bx n71
+bxxxxx n72
+bxxx n73
+bx n74
+bx n75
+bx n76
+bxxxxxxxxxxxxxxxx n77
+bxxxxxxxx n78
+bxxxxxxxx n79
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n80
+bxxxxxxxxxxxxxxxxxxxx n81
+bxxxxx n82
+#5
+b0 n1
+b0 n22
+b0 n56
+#10
+b1 n1
+b1 n22
+b1 n56
+#15
+b0 n1
+b0 n22
+b0 n56
+#20
+b1 n1
+b1 n22
+b1 n56
+#25
+b0 n1
+b0 n22
+b0 n56
+#30
+b1 n1
+b1 n22
+b1 n56
+#35
+b0 n1
+b0 n22
+b0 n56
+#40
+b1 n1
+b1 n22
+b1 n56
+#45
+b0 n1
+b0 n22
+b0 n56
+#50
+b1 n1
+b1 n22
+b1 n56
+#55
+b0 n1
+b0 n22
+b0 n56
+#60
+b1 n1
+b1 n22
+b1 n56
+#65
+b0 n1
+b0 n22
+b0 n56
+#70
+b1 n1
+b1 n22
+b1 n56
+#75
+b0 n1
+b0 n22
+b0 n56
+#80
+b1 n1
+b1 n22
+b1 n56
+#85
+b0 n1
+b0 n22
+b0 n56
+#90
+b1 n1
+b1 n22
+b1 n56
+#95
+b0 n1
+b0 n22
+b0 n56
+#100
+b1 n1
+b1 n22
+b1 n56
+#105
+b0 n1
+b0 n22
+b0 n56
+#110
+b1 n1
+b1 n22
+b1 n56
+#115
+b0 n1
+b0 n22
+b0 n56
+#120
+b1 n1
+b1 n22
+b1 n56
+#125
+b0 n1
+b0 n22
+b0 n56
+#130
+b1 n1
+b1 n22
+b1 n56
+#135
+b0 n1
+b0 n22
+b0 n56
+#140
+b1 n1
+b1 n22
+b1 n56
+#145
+b0 n1
+b0 n22
+b0 n56
+#150
+b1 n1
+b1 n22
+b1 n56
+#155
+b0 n1
+b0 n22
+b0 n56
+#160
+b1 n1
+b1 n22
+b1 n56
+#165
+b0 n1
+b0 n22
+b0 n56
+#170
+b1 n1
+b1 n22
+b1 n56
+#175
+b0 n1
+b0 n22
+b0 n56
+#180
+b1 n1
+b1 n22
+b1 n56
+#185
+b0 n1
+b0 n22
+b0 n56
+#190
+b1 n1
+b1 n22
+b1 n56
+#195
+b0 n1
+b0 n22
+b0 n56
+#200
+b1 n1
+b1 n22
+b1 n56
+#202

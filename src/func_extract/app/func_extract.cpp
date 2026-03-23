@@ -1,3 +1,6 @@
+// mlir_gen.h MUST be included first to avoid macro pollution from check_regs.h
+#include "../src/mlir_gen.h"
+
 #include "../src/parse_fill.h"
 #include "../src/expr.h"
 #include "../src/vcd_parser.h"
@@ -13,6 +16,7 @@
 #include "../src/helper.h"
 
 #include <string>
+#include <unistd.h>
 #include <fstream>
 #include <time.h>
 #include <sys/stat.h>
@@ -71,6 +75,7 @@ int main(int argc, char *argv[]) {
   std::string doClean = "-";  
 
   bool printRegInfo = false;
+  bool useMLIR = false;
 
   bool userVerbose = false;
   bool userQuiet = false;
@@ -92,6 +97,8 @@ int main(int argc, char *argv[]) {
       userQuiet = true;
     } else if (!strcmp(arg, "-reg")) {
       printRegInfo = true;
+    } else if (!strcmp(arg, "-mlir")) {
+      useMLIR = true;
     } else if (!strcmp(arg, "-gdb")) {
       // Exec into gdb with this executable
       char exe_path[PATH_MAX];
@@ -234,7 +241,13 @@ int main(int argc, char *argv[]) {
     // Make an implementation of a UFGenFactory that provides
     // instances of UpdateFunctionGen, which generates LLVM
     // based on g_moduleInfoMap and the design's AST.
-    UFGenFactoryImpl<UpdateFunctionGen> factory;
+    // If useMLIR is set, use MLIRUpdateFunctionGen instead.
+    std::shared_ptr<UFGenFactory> factory;
+    if (useMLIR) {
+      factory = std::make_shared<UFGenFactoryImpl<MLIRUpdateFunctionGen>>();
+    } else {
+      factory = std::make_shared<UFGenFactoryImpl<UpdateFunctionGen>>();
+    }
 
     // Make an implementation of ModuleInfo that FuncExtractFlow
     // need to look up design data.
@@ -243,7 +256,7 @@ int main(int argc, char *argv[]) {
     // Give the factory and the query to the flow.
     // The flow ordering is to iterate over instructions in the inner loop
     // and ASVs in the outer loop.
-    FuncExtractFlow flow(factory, info, true /*innerLoopIsInstrs*/,
+    FuncExtractFlow flow(*factory, info, true /*innerLoopIsInstrs*/,
                          true /*reverseCycleOrder*/);
 
     flow.get_all_update();

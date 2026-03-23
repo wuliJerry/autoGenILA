@@ -1,6 +1,7 @@
 #ifndef LIVE_ANALYSIS_PASS_INFO_H
 #define LIVE_ANALYSIS_PASS_INFO_H
 
+#include <cstdint>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>

@@ -1,0 +1,17 @@
+# Yosys script to flatten Gemmini PE_256 (+ Tile wrapper + MacUnit) into design.v
+# PE_256 is the systolic array processing element with MAC and two accumulators (c1, c2)
+# TileWithReset adds the reset port that autoGenILA requires
+
+read_verilog -sv ./RTL/MacUnit.sv
+read_verilog -sv ./RTL/PE_256.sv
+read_verilog -sv ./RTL/Tile.sv
+read_verilog -sv ./RTL/TileWithReset.sv
+
+prep -top TileWithReset -flatten
+
+hierarchy -check
+proc
+memory -nordff
+proc
+opt_clean
+write_verilog -nodec ./design.v
