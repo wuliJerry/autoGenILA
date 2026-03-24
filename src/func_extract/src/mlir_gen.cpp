@@ -416,6 +416,16 @@ void MLIRUpdateFunctionGen::print_llvm_ir(
       abort();
     }
     mlir::Value destExpr = add_constraint(dest, 0, bound);
+    // Truncate or extend destExpr to match the declared return type.
+    // The constraint traversal may produce a wider type (e.g., i64) than
+    // the actual register width (e.g., i1 for a_transpose).
+    uint32_t retWidth = get_var_slice_width_simp(destVec.front(),
+                                                  g_moduleInfoMap[curModName]);
+    uint32_t exprWidth = getWidth(destExpr);
+    if (exprWidth > retWidth)
+      destExpr = trunc(destExpr, retWidth);
+    else if (exprWidth < retWidth)
+      destExpr = zext(destExpr, retWidth);
     builder.create<mlir::ReturnOp>(getLoc(), mlir::ValueRange{destExpr});
   } else {
     std::vector<mlir::Value> retVec;
