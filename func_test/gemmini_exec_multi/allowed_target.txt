@@ -1,0 +1,11 @@
+[
+\mesh.mesh.mesh_0_0.tile_0_0.c1
+\mesh.mesh.mesh_0_0.tile_0_0.c2
+]:8
+current_dataflow:2
+in_shift:2
+activation:2
+acc_scale_bits:2
+a_transpose:2
+bd_transpose:2
+control_state:2
