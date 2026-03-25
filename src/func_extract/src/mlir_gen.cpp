@@ -377,9 +377,14 @@ void MLIRUpdateFunctionGen::print_llvm_ir(
   entryBlock = theFunction.addEntryBlock();
   builder.setInsertionPointToStart(entryBlock);
 
-  // Register argument names
-  for (uint32_t i = 0; i < argNames.size(); i++)
+  // Register argument names and emit as MLIR attribute for downstream passes
+  llvm::SmallVector<mlir::Attribute> argNameAttrs;
+  for (uint32_t i = 0; i < argNames.size(); i++) {
     funcArgMap[argNames[i]] = entryBlock->getArgument(i);
+    argNameAttrs.push_back(mlir::StringAttr::get(&mlirCtx, argNames[i]));
+  }
+  theFunction->setAttr("taidl.arg_names",
+      mlir::ArrayAttr::get(&mlirCtx, argNameAttrs));
 
   // Load register array elements
   for (auto &pair : g_allowedTgtVec) {
