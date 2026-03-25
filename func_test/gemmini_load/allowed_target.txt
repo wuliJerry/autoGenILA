@@ -1,0 +1,6 @@
+strides_0:4
+scales_0:4
+shrinks_0:4
+block_strides_0:4
+pixel_repeats_0:4
+control_state:4

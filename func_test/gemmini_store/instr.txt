@@ -1,0 +1,132 @@
+// StoreController instruction (funct=3)
+#1:mvout
+(1)
+reset = 0
+io_cmd_valid = 1
+io_cmd_bits_cmd_inst_funct = 7'b0000011
+io_cmd_bits_cmd_inst_rs2 = 5'bx
+io_cmd_bits_cmd_inst_rs1 = 5'bx
+io_cmd_bits_cmd_inst_xd = 1'bx
+io_cmd_bits_cmd_inst_xs1 = 1'bx
+io_cmd_bits_cmd_inst_xs2 = 1'bx
+io_cmd_bits_cmd_inst_rd = 5'bx
+io_cmd_bits_cmd_inst_opcode = 7'bx
+io_cmd_bits_cmd_rs1 = 64'bx
+io_cmd_bits_cmd_rs2 = 64'bx
+io_cmd_bits_cmd_status_debug = 1'bx
+io_cmd_bits_cmd_status_cease = 1'bx
+io_cmd_bits_cmd_status_wfi = 1'bx
+io_cmd_bits_cmd_status_isa = 32'bx
+io_cmd_bits_cmd_status_dprv = 2'bx
+io_cmd_bits_cmd_status_dv = 1'bx
+io_cmd_bits_cmd_status_prv = 2'bx
+io_cmd_bits_cmd_status_v = 1'bx
+io_cmd_bits_cmd_status_sd = 1'bx
+io_cmd_bits_cmd_status_zero2 = 23'bx
+io_cmd_bits_cmd_status_mpv = 1'bx
+io_cmd_bits_cmd_status_gva = 1'bx
+io_cmd_bits_cmd_status_mbe = 1'bx
+io_cmd_bits_cmd_status_sbe = 1'bx
+io_cmd_bits_cmd_status_sxl = 2'bx
+io_cmd_bits_cmd_status_uxl = 2'bx
+io_cmd_bits_cmd_status_sd_rv32 = 1'bx
+io_cmd_bits_cmd_status_zero1 = 8'bx
+io_cmd_bits_cmd_status_tsr = 1'bx
+io_cmd_bits_cmd_status_tw = 1'bx
+io_cmd_bits_cmd_status_tvm = 1'bx
+io_cmd_bits_cmd_status_mxr = 1'bx
+io_cmd_bits_cmd_status_sum = 1'bx
+io_cmd_bits_cmd_status_mprv = 1'bx
+io_cmd_bits_cmd_status_xs = 2'bx
+io_cmd_bits_cmd_status_fs = 2'bx
+io_cmd_bits_cmd_status_mpp = 2'bx
+io_cmd_bits_cmd_status_vs = 2'bx
+io_cmd_bits_cmd_status_spp = 1'bx
+io_cmd_bits_cmd_status_mpie = 1'bx
+io_cmd_bits_cmd_status_ube = 1'bx
+io_cmd_bits_cmd_status_spie = 1'bx
+io_cmd_bits_cmd_status_upie = 1'bx
+io_cmd_bits_cmd_status_mie = 1'bx
+io_cmd_bits_cmd_status_hie = 1'bx
+io_cmd_bits_cmd_status_sie = 1'bx
+io_cmd_bits_cmd_status_uie = 1'bx
+io_cmd_bits_rob_id_bits = 6'bx
+io_cmd_bits_from_matmul_fsm = 1'bx
+io_cmd_bits_from_conv_fsm = 1'bx
+io_dma_req_ready = 1'bx
+io_dma_resp_valid = 1'bx
+io_dma_resp_bits_cmd_id = 8'bx
+io_completed_ready = 1'bx
+
+#delay:4
+
+
+R:
+control_state
+
+
+$TOP:
+StoreController
+
+
+$NOP:
+reset = 0
+io_cmd_valid = 0
+io_cmd_bits_cmd_inst_funct = 7'b0
+io_cmd_bits_cmd_inst_rs2 = 5'b0
+io_cmd_bits_cmd_inst_rs1 = 5'b0
+io_cmd_bits_cmd_inst_xd = 0
+io_cmd_bits_cmd_inst_xs1 = 0
+io_cmd_bits_cmd_inst_xs2 = 0
+io_cmd_bits_cmd_inst_rd = 5'b0
+io_cmd_bits_cmd_inst_opcode = 7'b0
+io_cmd_bits_cmd_rs1 = 64'b0
+io_cmd_bits_cmd_rs2 = 64'b0
+io_cmd_bits_cmd_status_debug = 0
+io_cmd_bits_cmd_status_cease = 0
+io_cmd_bits_cmd_status_wfi = 0
+io_cmd_bits_cmd_status_isa = 32'b0
+io_cmd_bits_cmd_status_dprv = 2'b0
+io_cmd_bits_cmd_status_dv = 0
+io_cmd_bits_cmd_status_prv = 2'b0
+io_cmd_bits_cmd_status_v = 0
+io_cmd_bits_cmd_status_sd = 0
+io_cmd_bits_cmd_status_zero2 = 23'b0
+io_cmd_bits_cmd_status_mpv = 0
+io_cmd_bits_cmd_status_gva = 0
+io_cmd_bits_cmd_status_mbe = 0
+io_cmd_bits_cmd_status_sbe = 0
+io_cmd_bits_cmd_status_sxl = 2'b0
+io_cmd_bits_cmd_status_uxl = 2'b0
+io_cmd_bits_cmd_status_sd_rv32 = 0
+io_cmd_bits_cmd_status_zero1 = 8'b0
+io_cmd_bits_cmd_status_tsr = 0
+io_cmd_bits_cmd_status_tw = 0
+io_cmd_bits_cmd_status_tvm = 0
+io_cmd_bits_cmd_status_mxr = 0
+io_cmd_bits_cmd_status_sum = 0
+io_cmd_bits_cmd_status_mprv = 0
+io_cmd_bits_cmd_status_xs = 2'b0
+io_cmd_bits_cmd_status_fs = 2'b0
+io_cmd_bits_cmd_status_mpp = 2'b0
+io_cmd_bits_cmd_status_vs = 2'b0
+io_cmd_bits_cmd_status_spp = 0
+io_cmd_bits_cmd_status_mpie = 0
+io_cmd_bits_cmd_status_ube = 0
+io_cmd_bits_cmd_status_spie = 0
+io_cmd_bits_cmd_status_upie = 0
+io_cmd_bits_cmd_status_mie = 0
+io_cmd_bits_cmd_status_hie = 0
+io_cmd_bits_cmd_status_sie = 0
+io_cmd_bits_cmd_status_uie = 0
+io_cmd_bits_rob_id_bits = 6'b0
+io_cmd_bits_from_matmul_fsm = 0
+io_cmd_bits_from_conv_fsm = 0
+io_dma_req_ready = 0
+io_dma_resp_valid = 0
+io_dma_resp_bits_cmd_id = 8'b0
+io_completed_ready = 0
+
+#CLK:clock
+
+#RST:reset

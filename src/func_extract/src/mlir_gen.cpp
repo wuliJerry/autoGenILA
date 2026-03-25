@@ -230,6 +230,18 @@ mlir::Value MLIRUpdateFunctionGen::make_mlir_instr(
     mlir::Value rhs = builder.create<mlir::arith::CmpIOp>(loc, mlir::arith::CmpIPredicate::ne, op2, zero2);
     result = builder.create<mlir::arith::OrIOp>(loc, lhs, rhs);
   }
+  else if (op == "/" || op == "div") {
+    if (isSigned)
+      result = builder.create<mlir::arith::DivSIOp>(loc, op1, op2).getResult();
+    else
+      result = builder.create<mlir::arith::DivUIOp>(loc, op1, op2).getResult();
+  }
+  else if (op == "%" || op == "mod") {
+    if (isSigned)
+      result = builder.create<mlir::arith::RemSIOp>(loc, op1, op2).getResult();
+    else
+      result = builder.create<mlir::arith::RemUIOp>(loc, op1, op2).getResult();
+  }
   else { toCout("MLIR gen: unsupported op: " + op); abort(); }
 
   if (result && getWidth(result) > destWidth)

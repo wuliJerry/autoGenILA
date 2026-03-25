@@ -1,0 +1,16 @@
+read_verilog -sv ./RTL/StoreController.sv
+read_verilog -sv ./RTL/DMACommandTracker_1.sv
+read_verilog -sv ./RTL/Queue2_GemminiCmd.sv
+read_verilog -sv ./RTL/ram_2x274.sv
+
+prep -top StoreController -flatten
+
+hierarchy -check
+proc
+memory -nomap
+memory_dff
+memory_collect
+memory_map
+proc
+opt_clean
+write_verilog -nodec ./design.v
