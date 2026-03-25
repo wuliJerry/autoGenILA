@@ -1,0 +1,17 @@
+read_verilog -sv ./RTL/LoadController.sv
+read_verilog -sv ./RTL/DMACommandTracker.sv
+read_verilog -sv ./RTL/Queue8_GemminiCmd.sv
+read_verilog -sv ./RTL/ram_8x246.sv
+
+prep -top LoadController -flatten
+
+hierarchy -check
+proc
+memory -nomap
+memory_dff
+memory_collect
+memory_map
+proc
+opt_clean
+delete t:$check
+sim -clock clock -reset reset -rstlen 50 -vcd ./rst.vcd
