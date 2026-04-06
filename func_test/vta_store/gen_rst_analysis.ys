@@ -1,0 +1,6 @@
+read_verilog -sv autoGenILA/func_test/vta_store/RTL//VTA.DefaultDe10Config.sv
+
+prep -top Store -flatten
+
+delete t:$check
+sim -clock clock -reset reset -rstlen 50 -vcd autoGenILA/func_test/vta_store//rst.vcd

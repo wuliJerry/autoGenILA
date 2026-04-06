@@ -1,0 +1,5 @@
+io_inst_ready:4
+io_vme_wr_cmd_valid:4
+io_vme_wr_cmd_bits_addr:4
+io_vme_wr_cmd_bits_len:4
+io_vme_wr_data_valid:4

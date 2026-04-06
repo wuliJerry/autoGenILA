@@ -1,0 +1,89 @@
+// VTA Store: store operation
+#1:store
+(1)
+reset = 0
+io_start = 1
+io_dec_push_next = 0
+io_dec_push_prev = 0
+io_dec_pop_next = 0
+io_dec_pop_prev = 0
+io_dec_op = 3'bx
+io_dec_xsize = 16'bx
+io_dec_xpad_0 = 4'bx
+io_dec_xpad_1 = 4'bx
+io_dec_ysize = 16'bx
+io_dec_ypad_0 = 4'bx
+io_dec_ypad_1 = 4'bx
+io_dec_dram_offset = 32'bx
+io_dec_sram_offset = 16'bx
+io_vme_wr_0_cmd_ready = 1
+io_vme_wr_0_data_ready = 1
+io_vme_wr_0_ack = 0
+io_tensorStore_rd_0_data_valid = 1'bx
+io_tensorStore_rd_0_data_bits_0_0 = 8'bx
+io_tensorStore_rd_0_data_bits_0_1 = 8'bx
+io_tensorStore_rd_0_data_bits_0_2 = 8'bx
+io_tensorStore_rd_0_data_bits_0_3 = 8'bx
+io_tensorStore_rd_0_data_bits_0_4 = 8'bx
+io_tensorStore_rd_0_data_bits_0_5 = 8'bx
+io_tensorStore_rd_0_data_bits_0_6 = 8'bx
+io_tensorStore_rd_0_data_bits_0_7 = 8'bx
+io_tensorStore_rd_0_data_bits_0_8 = 8'bx
+io_tensorStore_rd_0_data_bits_0_9 = 8'bx
+io_tensorStore_rd_0_data_bits_0_10 = 8'bx
+io_tensorStore_rd_0_data_bits_0_11 = 8'bx
+io_tensorStore_rd_0_data_bits_0_12 = 8'bx
+io_tensorStore_rd_0_data_bits_0_13 = 8'bx
+io_tensorStore_rd_0_data_bits_0_14 = 8'bx
+io_tensorStore_rd_0_data_bits_0_15 = 8'bx
+
+#delay:4
+
+
+R:
+
+
+$TOP:
+Store
+
+
+$NOP:
+reset = 0
+io_start = 0
+io_dec_push_next = 0
+io_dec_push_prev = 0
+io_dec_pop_next = 0
+io_dec_pop_prev = 0
+io_dec_op = 3'b0
+io_dec_xsize = 16'b0
+io_dec_xpad_0 = 4'b0
+io_dec_xpad_1 = 4'b0
+io_dec_ysize = 16'b0
+io_dec_ypad_0 = 4'b0
+io_dec_ypad_1 = 4'b0
+io_dec_dram_offset = 32'b0
+io_dec_sram_offset = 16'b0
+io_vme_wr_0_cmd_ready = 0
+io_vme_wr_0_data_ready = 0
+io_vme_wr_0_ack = 0
+io_tensorStore_rd_0_data_valid = 0
+io_tensorStore_rd_0_data_bits_0_0 = 8'b0
+io_tensorStore_rd_0_data_bits_0_1 = 8'b0
+io_tensorStore_rd_0_data_bits_0_2 = 8'b0
+io_tensorStore_rd_0_data_bits_0_3 = 8'b0
+io_tensorStore_rd_0_data_bits_0_4 = 8'b0
+io_tensorStore_rd_0_data_bits_0_5 = 8'b0
+io_tensorStore_rd_0_data_bits_0_6 = 8'b0
+io_tensorStore_rd_0_data_bits_0_7 = 8'b0
+io_tensorStore_rd_0_data_bits_0_8 = 8'b0
+io_tensorStore_rd_0_data_bits_0_9 = 8'b0
+io_tensorStore_rd_0_data_bits_0_10 = 8'b0
+io_tensorStore_rd_0_data_bits_0_11 = 8'b0
+io_tensorStore_rd_0_data_bits_0_12 = 8'b0
+io_tensorStore_rd_0_data_bits_0_13 = 8'b0
+io_tensorStore_rd_0_data_bits_0_14 = 8'b0
+io_tensorStore_rd_0_data_bits_0_15 = 8'b0
+
+#CLK:clock
+
+#RST:reset

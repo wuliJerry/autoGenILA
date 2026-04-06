@@ -1,0 +1,10 @@
+io_done:4
+io_uop_idx_valid:4
+io_uop_idx_bits:4
+io_acc_rd_0_idx_valid:4
+io_acc_rd_0_idx_bits:4
+io_acc_wr_0_valid:4
+io_acc_wr_0_bits_idx:4
+io_out_wr_0_valid:4
+io_out_wr_0_bits_idx:4
+io_out_wr_0_bits_data_0_0:4

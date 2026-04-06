@@ -1,0 +1,13 @@
+read_verilog -sv autoGenILA/func_test/vta_store/RTL//VTA.DefaultDe10Config.sv
+
+prep -top Store -flatten
+
+hierarchy -check
+proc
+memory -nomap
+memory_dff
+memory_collect
+memory_map
+proc
+opt_clean
+write_verilog -nodec autoGenILA/func_test/vta_store//design.v

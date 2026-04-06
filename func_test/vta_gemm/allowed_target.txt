@@ -1,0 +1,9 @@
+\mvc_0.dot_0_0.m_0.rA:4
+\mvc_0.dot_0_0.m_0.rB:4
+io_done:4
+io_uop_idx_valid:4
+io_uop_idx_bits:4
+io_inp_rd_0_idx_valid:4
+io_inp_rd_0_idx_bits:4
+io_wgt_rd_0_idx_valid:4
+io_wgt_rd_0_idx_bits:4

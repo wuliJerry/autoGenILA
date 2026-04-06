@@ -1,0 +1,1 @@
+/home/ruijieg/tensorlift/autoGenILA/func_test/vta_gemm/RTL/VTA.DefaultDe10Config.sv

@@ -1,0 +1,101 @@
+// VTA TensorAlu: ALU min operation
+#1:alu
+(1)
+reset = 0
+io_start = 1
+io_dec_op = 3'b100
+io_dec_alu_op = 2'b00
+io_dec_alu_imm = 16'bx
+io_dec_alu_use_imm = 0
+io_dec_lp_0 = 14'bx
+io_dec_lp_1 = 14'bx
+io_dec_uop_end = 14'bx
+io_dec_uop_begin = 13'bx
+io_dec_reset = 0
+io_dec_push_next = 0
+io_dec_push_prev = 0
+io_dec_pop_next = 0
+io_dec_pop_prev = 0
+io_dec_acc_0 = 11'bx
+io_dec_acc_1 = 11'bx
+io_dec_inp_0 = 11'bx
+io_dec_inp_1 = 11'bx
+io_dec_empty_0 = 1'bx
+io_uop_data_valid = 1'bx
+io_uop_data_bits_u0 = 11'bx
+io_uop_data_bits_u1 = 11'bx
+io_uop_data_bits_u2 = 10'bx
+io_acc_rd_0_data_valid = 1
+io_acc_rd_0_data_bits_0_0 = 32'bx
+io_acc_rd_0_data_bits_0_1 = 32'bx
+io_acc_rd_0_data_bits_0_2 = 32'bx
+io_acc_rd_0_data_bits_0_3 = 32'bx
+io_acc_rd_0_data_bits_0_4 = 32'bx
+io_acc_rd_0_data_bits_0_5 = 32'bx
+io_acc_rd_0_data_bits_0_6 = 32'bx
+io_acc_rd_0_data_bits_0_7 = 32'bx
+io_acc_rd_0_data_bits_0_8 = 32'bx
+io_acc_rd_0_data_bits_0_9 = 32'bx
+io_acc_rd_0_data_bits_0_10 = 32'bx
+io_acc_rd_0_data_bits_0_11 = 32'bx
+io_acc_rd_0_data_bits_0_12 = 32'bx
+io_acc_rd_0_data_bits_0_13 = 32'bx
+io_acc_rd_0_data_bits_0_14 = 32'bx
+io_acc_rd_0_data_bits_0_15 = 32'bx
+
+#delay:4
+
+
+R:
+
+
+$TOP:
+TensorAlu
+
+
+$NOP:
+reset = 0
+io_start = 0
+io_dec_op = 3'b0
+io_dec_alu_op = 2'b0
+io_dec_alu_imm = 16'b0
+io_dec_alu_use_imm = 0
+io_dec_lp_0 = 14'b0
+io_dec_lp_1 = 14'b0
+io_dec_uop_end = 14'b0
+io_dec_uop_begin = 13'b0
+io_dec_reset = 0
+io_dec_push_next = 0
+io_dec_push_prev = 0
+io_dec_pop_next = 0
+io_dec_pop_prev = 0
+io_dec_acc_0 = 11'b0
+io_dec_acc_1 = 11'b0
+io_dec_inp_0 = 11'b0
+io_dec_inp_1 = 11'b0
+io_dec_empty_0 = 0
+io_uop_data_valid = 0
+io_uop_data_bits_u0 = 11'b0
+io_uop_data_bits_u1 = 11'b0
+io_uop_data_bits_u2 = 10'b0
+io_acc_rd_0_data_valid = 0
+io_acc_rd_0_data_bits_0_0 = 32'b0
+io_acc_rd_0_data_bits_0_1 = 32'b0
+io_acc_rd_0_data_bits_0_2 = 32'b0
+io_acc_rd_0_data_bits_0_3 = 32'b0
+io_acc_rd_0_data_bits_0_4 = 32'b0
+io_acc_rd_0_data_bits_0_5 = 32'b0
+io_acc_rd_0_data_bits_0_6 = 32'b0
+io_acc_rd_0_data_bits_0_7 = 32'b0
+io_acc_rd_0_data_bits_0_8 = 32'b0
+io_acc_rd_0_data_bits_0_9 = 32'b0
+io_acc_rd_0_data_bits_0_10 = 32'b0
+io_acc_rd_0_data_bits_0_11 = 32'b0
+io_acc_rd_0_data_bits_0_12 = 32'b0
+io_acc_rd_0_data_bits_0_13 = 32'b0
+io_acc_rd_0_data_bits_0_14 = 32'b0
+io_acc_rd_0_data_bits_0_15 = 32'b0
+
+#CLK:clock
+
+#RST:reset
