@@ -1,0 +1,30 @@
+// VTA GenVMECmd: DMA command generation
+#1:load_cmd
+(1)
+reset = 0
+io_start = 1
+io_isBusy = 1'bx
+io_inst = 128'bx
+io_baddr = 32'bx
+io_vmeCmd_ready = 1
+
+#delay:4
+
+
+R:
+
+
+$TOP:
+GenVMECmd
+
+
+$NOP:
+io_start = 0
+io_isBusy = 0
+io_inst = 128'b0
+io_baddr = 32'b0
+io_vmeCmd_ready = 0
+
+#CLK:clock
+
+#RST:reset

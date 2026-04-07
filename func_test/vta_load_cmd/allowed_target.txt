@@ -1,0 +1,5 @@
+io_vmeCmd_valid:4
+io_vmeCmd_bits_addr:4
+io_vmeCmd_bits_len:4
+io_done:4
+io_readLen:4

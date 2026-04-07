@@ -1,0 +1,284 @@
+$version Yosys $end
+$scope module GenVMECmd $end
+$var wire 32 n94 xfer_init_addr [31:0] $end
+$var wire 11 n93 totalWidth [10:0] $end
+$var wire 1 n92 stride $end
+$var wire 1 n91 startIssueCmdRead $end
+$var reg 16 n90 srcRowIdx [15:0] $end
+$var wire 1 n89 reset $end
+$var wire 5 n88 readLen [4:0] $end
+$var wire 1 n87 rdCmdStartIdxValid $end
+$var reg 11 n86 rdCmdStartIdx [10:0] $end
+$var reg 32 n85 rdCmdExtAddrRowBegin [31:0] $end
+$var reg 32 n84 rdCmdExtAddr [31:0] $end
+$var reg 12 n83 rdCmdDestBlockIdxNext [11:0] $end
+$var wire 12 n82 rdCmdDestBlockIdx [11:0] $end
+$var wire 17 n81 nextBlRNb [16:0] $end
+$var reg 1 n80 newReadRow $end
+$var wire 32 n79 memRow [31:0] $end
+$var wire 1 n78 io_vmeCmd_valid $end
+$var wire 1 n77 io_vmeCmd_ready $end
+$var wire 21 n76 io_vmeCmd_bits_tag [20:0] $end
+$var wire 4 n75 io_vmeCmd_bits_len [3:0] $end
+$var wire 32 n74 io_vmeCmd_bits_addr [31:0] $end
+$var wire 1 n73 io_start $end
+$var wire 5 n72 io_readLen [4:0] $end
+$var wire 1 n71 io_isBusy $end
+$var wire 128 n70 io_inst [127:0] $end
+$var wire 1 n69 io_done $end
+$var wire 32 n68 io_baddr [31:0] $end
+$var wire 5 n67 firstMaxTransfer [4:0] $end
+$var wire 16 n66 dec_ysize [15:0] $end
+$var wire 4 n65 dec_ypad_0 [3:0] $end
+$var wire 16 n64 dec_xstride [15:0] $end
+$var wire 16 n63 dec_xsize [15:0] $end
+$var wire 4 n62 dec_xpad_1 [3:0] $end
+$var wire 4 n61 dec_xpad_0 [3:0] $end
+$var wire 16 n60 dec_sram_offset [15:0] $end
+$var wire 32 n59 dec_dram_offset [31:0] $end
+$var reg 20 n58 currentRowIdx [19:0] $end
+$var reg 1 n57 commandsDone $end
+$var wire 1 n56 clock $end
+$var wire 17 n55 blocksRemained [16:0] $end
+$var wire 17 n54 blocksReadSize [16:0] $end
+$var reg 17 n53 blocksReadNb [16:0] $end
+$var wire 32 n52 _xfer_init_addr_T_1 [31:0] $end
+$var wire 36 n51 _xfer_init_addr_T [35:0] $end
+$var wire 11 n50 _totalWidth_T_1 [10:0] $end
+$var wire 16 n49 _srcRowIdx_T_1 [15:0] $end
+$var wire 11 n48 _rdCmdStartIdx_T_3 [10:0] $end
+$var wire 11 n47 _rdCmdStartIdx_T_1 [10:0] $end
+$var wire 1 n46 _rdCmdStartIdxValid_T_6 $end
+$var wire 1 n45 _rdCmdStartIdxValid_T_5 $end
+$var wire 1 n44 _rdCmdStartIdxValid_T_4 $end
+$var wire 1 n43 _rdCmdStartIdxValid_T_3 $end
+$var wire 16 n42 _rdCmdStartIdxValid_T_2 [15:0] $end
+$var wire 32 n41 _rdCmdExtAddr_T_2 [31:0] $end
+$var wire 8 n40 _rdCmdExtAddr_T [7:0] $end
+$var wire 12 n39 _rdCmdDestBlockIdx_T [11:0] $end
+$var wire 12 n38 _rdCmdDestBlockIdxNext_T_3 [11:0] $end
+$var wire 12 n37 _rdCmdDestBlockIdxNext_T_1 [11:0] $end
+$var wire 20 n36 _memRow_T [19:0] $end
+$var wire 5 n35 _io_vmeCmd_bits_len_T_1 [4:0] $end
+$var wire 8 n34 _firstMaxTransfer_T_2 [7:0] $end
+$var wire 20 n33 _currentRowIdx_T_1 [19:0] $end
+$var wire 17 n32 _T_8 [16:0] $end
+$var wire 1 n31 _T_14 $end
+$var wire 16 n30 _T_11 [15:0] $end
+$var wire 5 n29 _GEN_9 [4:0] $end
+$var wire 5 n28 _GEN_8 [4:0] $end
+$var wire 1 n27 _GEN_6 $end
+$var wire 12 n26 _GEN_45 [11:0] $end
+$var wire 32 n25 _GEN_44 [31:0] $end
+$var wire 32 n24 _GEN_43 [31:0] $end
+$var wire 16 n23 _GEN_42 [15:0] $end
+$var wire 1 n22 _GEN_4 $end
+$var wire 20 n21 _GEN_39 [19:0] $end
+$var wire 16 n20 _GEN_38 [15:0] $end
+$var wire 20 n19 _GEN_37 [19:0] $end
+$var wire 16 n18 _GEN_36 [15:0] $end
+$var wire 16 n17 _GEN_35 [15:0] $end
+$var wire 17 n16 _GEN_33 [16:0] $end
+$var wire 17 n15 _GEN_32 [16:0] $end
+$var wire 36 n14 _GEN_31 [35:0] $end
+$var wire 12 n13 _GEN_26 [11:0] $end
+$var wire 32 n12 _GEN_23 [31:0] $end
+$var wire 32 n11 _GEN_22 [31:0] $end
+$var wire 1 n10 _GEN_21 $end
+$var wire 32 n9 _GEN_20 [31:0] $end
+$var wire 1 n8 _GEN_2 $end
+$var wire 32 n7 _GEN_19 [31:0] $end
+$var wire 32 n6 _GEN_17 [31:0] $end
+$var wire 32 n5 _GEN_16 [31:0] $end
+$var wire 11 n4 _GEN_14 [10:0] $end
+$var wire 11 n3 _GEN_11 [10:0] $end
+$var wire 17 n2 _GEN_10 [16:0] $end
+$var wire 32 n1 _GEN_1 [31:0] $end
+$upscope $end
+$enddefinitions $end
+#0
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n1
+bxxxxxxxxxxxxxxxxx n2
+bxxxxxxxxxxx n3
+bxxxxxxxxxxx n4
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n5
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n6
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n7
+bx n8
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n9
+bx n10
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n11
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n12
+bxxxxxxxxxxxx n13
+b0000xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n14
+b000000000000xxxxx n15
+b000000000000xxxxx n16
+b000000000000xxxx n17
+b000000000000xxxx n18
+b0000000000000000xxxx n19
+b000000000000xxxx n20
+b0000xxxxxxxxxxxxxxxx n21
+bx n22
+b00000xxxxxxxxxxx n23
+b000000000000xxxxxxxxxxxxxxxx0000 n24
+b000000000000000000000000xxxxx000 n25
+b0000000xxxxx n26
+bx n27
+bxxxxx n28
+bxxxxx n29
+bxxxxxxxxxxxxxxxx n30
+bx n31
+bxxxxxxxxxxxxxxxxx n32
+bxxxxxxxxxxxxxxxxxxxx n33
+bxxxxxxxx n34
+bxxxxx n35
+bxxxxxxxxxxxxxxxx0000 n36
+bxxxxxxxxxxxx n37
+bxxxxxxxxxxxx n38
+bxxxxxxxxxxx0 n39
+bxxxxx000 n40
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n41
+bxxxxxxxxxxxxxxxx n42
+bx n43
+bx n44
+bx n45
+bx n46
+bxxxxxxxxxxx n47
+bxxxxxxxxxxx n48
+bxxxxxxxxxxxxxxxx n49
+bxxxxxxxxxxx n50
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx0000 n51
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxx0000 n52
+bxxxxxxxxxxxxxxxxx n53
+bxxxxxxxxxxxxxxxx0 n54
+bxxxxxxxxxxxxxxxxx n55
+bx n56
+bx n57
+bxxxxxxxxxxxxxxxxxxxx n58
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n59
+bxxxxxxxxxxxxxxxx n60
+bxxxx n61
+bxxxx n62
+bxxxxxxxxxxxxxxxx n63
+bxxxxxxxxxxxxxxxx n64
+bxxxx n65
+bxxxxxxxxxxxxxxxx n66
+bxxxxx n67
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n68
+bx n69
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n70
+bx n71
+bxxxxx n72
+bx n73
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n74
+bxxxx n75
+b000000000xxxxxxxxxxxx n76
+bx n77
+bx n78
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n79
+bx n80
+bxxxxxxxxxxxxxxxxx n81
+bxxxxxxxxxxxx n82
+bxxxxxxxxxxxx n83
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n84
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n85
+bxxxxxxxxxxx n86
+bx n87
+bxxxxx n88
+b1 n89
+bxxxxxxxxxxxxxxxx n90
+bx n91
+bx n92
+bxxxxxxxxxxx n93
+bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx n94
+#5
+b0 n56
+#10
+b1 n8
+b1 n22
+b0 n31
+b0 n46
+b1 n56
+b1 n57
+b1 n69
+b0 n78
+b0 n87
+b0 n91
+b0 n92
+#15
+b0 n56
+#20
+b1 n56
+#25
+b0 n56
+#30
+b1 n56
+#35
+b0 n56
+#40
+b1 n56
+#45
+b0 n56
+#50
+b1 n56
+#55
+b0 n56
+#60
+b1 n56
+#65
+b0 n56
+#70
+b1 n56
+#75
+b0 n56
+#80
+b1 n56
+#85
+b0 n56
+#90
+b1 n56
+#95
+b0 n56
+#100
+b1 n56
+#105
+b0 n56
+#110
+b1 n56
+#115
+b0 n56
+#120
+b1 n56
+#125
+b0 n56
+#130
+b1 n56
+#135
+b0 n56
+#140
+b1 n56
+#145
+b0 n56
+#150
+b1 n56
+#155
+b0 n56
+#160
+b1 n56
+#165
+b0 n56
+#170
+b1 n56
+#175
+b0 n56
+#180
+b1 n56
+#185
+b0 n56
+#190
+b1 n56
+#195
+b0 n56
+#200
+b1 n56
+#202
