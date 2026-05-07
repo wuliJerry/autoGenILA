@@ -203,47 +203,157 @@ bool split_slice(const std::string& slicedName, std::string &name, std::string &
 
 
 // no matter leftIdx or rightIdx is bigger, always return a positive width
+//
+// Hand parser replacing three nested std::regex_match calls. Hot-path
+// (called once per constraint node); the regex DFS allocates tens of
+// stack frames per call which balloons with recursion depth.
 uint32_t get_width(const std::string& slice) {
-  static const std::regex pSlice("^(?:\\s?)\\[(\\d+)\\:(\\d+)\\](?:\\s)?$");
-  static const std::regex pSingleBit("^(?:\\s)?\\[\\d+\\](?:\\s)?$");
-  std::smatch m;
-  if (slice.empty())
-    return 1;
-  if( !std::regex_match(slice, m, pSlice) && !std::regex_match(slice, m, pSingleBit) )
+  if (slice.empty()) return 1;
+  size_t i = 0;
+  size_t n = slice.size();
+  if (i < n && slice[i] == ' ') ++i;
+  if (i >= n || slice[i] != '[') {
     std::cout << "Wrong input to get_width:|" + slice << "|" << std::endl;
-  if( std::regex_match(slice, m, pSingleBit) )
     return 1;
-  else {
-    std::regex_match(slice, m, pSlice);
-    uint32_t leftIdx = str2int(m.str(1), "get_width 1st("+slice+")");
-    uint32_t rightIdx = str2int(m.str(2), "get_width 2rd("+slice+")");
-    if(leftIdx > rightIdx)
-      return leftIdx - rightIdx + 1;
-    else
-      return rightIdx - leftIdx + 1;
   }
+  ++i;  // skip '['
+  size_t aStart = i;
+  while (i < n && slice[i] >= '0' && slice[i] <= '9') ++i;
+  if (i == aStart) {
+    std::cout << "Wrong input to get_width:|" + slice << "|" << std::endl;
+    return 1;
+  }
+  std::string aStr = slice.substr(aStart, i - aStart);
+  if (i < n && slice[i] == ']') {
+    // single-bit form
+    ++i;
+    if (i < n && slice[i] == ' ') ++i;
+    if (i != n) {
+      std::cout << "Wrong input to get_width:|" + slice << "|" << std::endl;
+    }
+    return 1;
+  }
+  if (i >= n || slice[i] != ':') {
+    std::cout << "Wrong input to get_width:|" + slice << "|" << std::endl;
+    return 1;
+  }
+  ++i;  // skip ':'
+  size_t bStart = i;
+  while (i < n && slice[i] >= '0' && slice[i] <= '9') ++i;
+  if (i == bStart) {
+    std::cout << "Wrong input to get_width:|" + slice << "|" << std::endl;
+    return 1;
+  }
+  std::string bStr = slice.substr(bStart, i - bStart);
+  if (i >= n || slice[i] != ']') {
+    std::cout << "Wrong input to get_width:|" + slice << "|" << std::endl;
+    return 1;
+  }
+  ++i;
+  if (i < n && slice[i] == ' ') ++i;
+  if (i != n) {
+    std::cout << "Wrong input to get_width:|" + slice << "|" << std::endl;
+  }
+  uint32_t leftIdx = str2int(aStr, "get_width 1st(" + slice + ")");
+  uint32_t rightIdx = str2int(bStr, "get_width 2rd(" + slice + ")");
+  return leftIdx > rightIdx ? leftIdx - rightIdx + 1 : rightIdx - leftIdx + 1;
 }
 
 
 // return low index
+//
+// Hand parser replacing std::regex for the same reason as get_end:
+// called once per AST node during add_ssa_constraint, and std::regex
+// DFS recursion depth crashes deep expression trees (LoopConv).
+// Parses `[N]` or `[M:N]` with optional single leading/trailing space;
+// for the one-number form both ends are the same index, so the low
+// index is just the number. For the range form the low index is the
+// second number after the `:`.
 uint32_t get_begin(const std::string& slice) {
-  static const std::regex pSlice("^(?:\\s?)\\[(?:(\\d+)\\:)?(\\d+)\\](\\s)?$");
-  std::smatch m;
-  if( !std::regex_match(slice, m, pSlice) )
+  size_t i = 0;
+  size_t n = slice.size();
+  if (i < n && slice[i] == ' ') ++i;
+  if (i >= n || slice[i] != '[') {
     std::cout << "Wrong input to get_begin:|" + slice << "|" << std::endl;
-  return str2int(m.str(2), "get_begin("+slice+")");
+    return 0;
+  }
+  ++i;  // skip '['
+  size_t aStart = i;
+  while (i < n && slice[i] >= '0' && slice[i] <= '9') ++i;
+  if (i == aStart) {
+    std::cout << "Wrong input to get_begin:|" + slice << "|" << std::endl;
+    return 0;
+  }
+  std::string a = slice.substr(aStart, i - aStart);
+  std::string low = a;  // default: single-index form, low == a
+  if (i < n && slice[i] == ':') {
+    ++i;
+    size_t bStart = i;
+    while (i < n && slice[i] >= '0' && slice[i] <= '9') ++i;
+    if (i == bStart) {
+      std::cout << "Wrong input to get_begin:|" + slice << "|" << std::endl;
+      return 0;
+    }
+    low = slice.substr(bStart, i - bStart);
+  }
+  if (i >= n || slice[i] != ']') {
+    std::cout << "Wrong input to get_begin:|" + slice << "|" << std::endl;
+    return 0;
+  }
+  ++i;  // skip ']'
+  if (i < n && slice[i] == ' ') ++i;
+  if (i != n) {
+    std::cout << "Wrong input to get_begin:|" + slice << "|" << std::endl;
+    return 0;
+  }
+  return str2int(low, "get_begin(" + slice + ")");
 }
 
 
 // return the high index
+//
+// Hot-path hand parser replacing a std::regex lookup. The std::regex
+// implementation in libstdc++ uses deep DFS recursion on non-trivial
+// patterns, and this function is invoked once per AST node during the
+// add_ssa_constraint walk — on designs with deep expression trees (e.g.
+// LoopConv) the stack overflows because regex_match adds 30-50 frames
+// per call. Manual parsing of `[N]` / `[N:M]` (optionally wrapped in
+// single leading/trailing whitespace) is both much faster and stack-safe.
 uint32_t get_end(const std::string& slice) {
-  static const std::regex pSlice("^(?:\\s?)\\[(\\d+)(?:\\:(\\d+))?\\](\\s)?$");
-  std::smatch m;
-  if( !std::regex_match(slice, m, pSlice) ) {
+  size_t i = 0;
+  size_t n = slice.size();
+  if (i < n && slice[i] == ' ') ++i;
+  if (i >= n || slice[i] != '[') {
     std::cout << "Wrong input to get_end:|" + slice << "|" << std::endl;
     return 0;
   }
-  return str2int(m.str(1), "get_end("+slice+")");
+  ++i;  // skip '['
+  size_t highStart = i;
+  while (i < n && slice[i] >= '0' && slice[i] <= '9') ++i;
+  if (i == highStart) {
+    std::cout << "Wrong input to get_end:|" + slice << "|" << std::endl;
+    return 0;
+  }
+  std::string highStr = slice.substr(highStart, i - highStart);
+  if (i >= n) {
+    std::cout << "Wrong input to get_end:|" + slice << "|" << std::endl;
+    return 0;
+  }
+  if (slice[i] == ':') {
+    ++i;
+    while (i < n && slice[i] >= '0' && slice[i] <= '9') ++i;
+  }
+  if (i >= n || slice[i] != ']') {
+    std::cout << "Wrong input to get_end:|" + slice << "|" << std::endl;
+    return 0;
+  }
+  ++i;  // skip ']'
+  if (i < n && slice[i] == ' ') ++i;
+  if (i != n) {
+    std::cout << "Wrong input to get_end:|" + slice << "|" << std::endl;
+    return 0;
+  }
+  return str2int(highStr, "get_end(" + slice + ")");
 }
 
 
@@ -945,11 +1055,19 @@ void toCoutVerb(const std::string& line) {
 
 
 bool isSingleBit(const std::string& slice) {
-  static const std::regex pSingleBit("\\[\\d+\\]");
-  if(std::regex_search( slice, pSingleBit ))
-    return true;
-  else
-    return false;
+  // Hand parser replacing std::regex for hot-path stack safety. Looks
+  // for `[N]` (single bit index) anywhere in the string. Rejects the
+  // `[N:M]` range form.
+  size_t n = slice.size();
+  for (size_t i = 0; i < n; ++i) {
+    if (slice[i] != '[') continue;
+    size_t j = i + 1;
+    if (j >= n || slice[j] < '0' || slice[j] > '9') continue;
+    while (j < n && slice[j] >= '0' && slice[j] <= '9') ++j;
+    if (j < n && slice[j] == ']') return true;  // [N]
+    // If we hit ':' it's a range like [N:M] — skip this position.
+  }
+  return false;
 }
 
 

@@ -20,6 +20,7 @@
 #include <fstream>
 #include <time.h>
 #include <sys/stat.h>
+#include <sys/resource.h>
 #include <glog/logging.h>
 
 #include "../../live_analysis/src/global_data.h"
@@ -63,6 +64,38 @@ using namespace taintGen;
 // 1. instr.txt
 // 2. module_info.txt
 int main(int argc, char *argv[]) {
+  // The AST walker in add_ssa_constraint / one_op_constraint recurses once
+  // per node; designs with very deep expression trees (LoopConv) blow the
+  // default 8 MiB stack. Setting RLIMIT_STACK after process startup does
+  // NOT resize the main thread's stack (the kernel already mapped it at
+  // exec time), so the raise has to happen BEFORE execve. Fix: on entry,
+  // check the stack limit, and if it's too small, raise it and re-exec
+  // ourselves via execvp — the new process inherits the raised limit and
+  // starts with a 1 GiB main-thread stack.
+  {
+    struct rlimit rl;
+    if (getrlimit(RLIMIT_STACK, &rl) == 0) {
+      const rlim_t target = 1024ULL * 1024ULL * 1024ULL;  // 1 GiB
+      if (rl.rlim_cur < target) {
+        rlim_t newCur = target;
+        if (rl.rlim_max != RLIM_INFINITY && rl.rlim_max < target)
+          newCur = rl.rlim_max;
+        if (newCur > rl.rlim_cur) {
+          rl.rlim_cur = newCur;
+          if (setrlimit(RLIMIT_STACK, &rl) == 0
+              && getenv("FUNC_EXTRACT_STACK_RAISED") == nullptr) {
+            // Only re-exec once — guard against infinite loop if the
+            // raise silently fails (e.g. in a restricted sandbox).
+            setenv("FUNC_EXTRACT_STACK_RAISED", "1", 1);
+            execvp(argv[0], argv);
+            // If execvp returns, something went wrong; fall through and
+            // run with whatever stack we have.
+          }
+        }
+      }
+    }
+  }
+
   google::InitGoogleLogging(argv[0]);
   FLAGS_log_dir = "/workspace/research/ILA/autoGenILA/src/func_extract/log";
 

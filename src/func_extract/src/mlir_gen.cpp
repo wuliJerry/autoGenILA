@@ -574,10 +574,24 @@ mlir::Value MLIRUpdateFunctionGen::add_constraint(
     return constant(0, width);
   }
 
-  // Check cache
+  // Check cache.
+  //
+  // As with the LLVM path in check_regs.cpp, an in-progress node is
+  // represented in the value map by a sentinel (a null mlir::Value).
+  // If we find the sentinel we're mid-recursion for this (var, time)
+  // pair and must break the cycle with a zero constant — otherwise
+  // mutually-referencing nodes cause unbounded recursion.
   std::string timedName = timed_name(varAndSlice, timeIdx);
   mlir::Value cached = lookupValue(timedName);
   if (cached) return cached;
+  // Separate "cycle in progress" bit so lookupValue's "missing" state
+  // is distinct from the sentinel. inProgress is a set<string> tracked
+  // alongside the value map.
+  if (inProgressTimedNames.count(timedName)) {
+    uint32_t width = insContextStk.get_var_slice_width_simp(varAndSlice);
+    return constant(0, width);
+  }
+  inProgressTimedNames.insert(timedName);
 
   mlir::Value retExpr;
 
@@ -604,6 +618,7 @@ mlir::Value MLIRUpdateFunctionGen::add_constraint(
     retExpr = add_ssa_constraint(node, timeIdx, bound);
 
   if (retExpr) registerValue(timedName, retExpr);
+  inProgressTimedNames.erase(timedName);
   return retExpr;
 }
 

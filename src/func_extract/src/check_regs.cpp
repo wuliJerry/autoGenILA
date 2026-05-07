@@ -687,10 +687,25 @@ UpdateFunctionGen::add_constraint(astNode* const node, uint32_t timeIdx, context
     curDynData->existedExpr.emplace(curTgt, 
                                     std::map<std::string, llvm::Value*>() );
 
-  if (curDynData->existedExpr[curTgt].find(timed_name(varAndSlice, timeIdx)) 
-      != curDynData->existedExpr[curTgt].end() ) {
-    return curDynData->existedExpr[curTgt][timed_name(varAndSlice, timeIdx)];
+  const std::string cacheKey = timed_name(varAndSlice, timeIdx);
+  auto existedIt = curDynData->existedExpr[curTgt].find(cacheKey);
+  if (existedIt != curDynData->existedExpr[curTgt].end()) {
+    // Cache hit. `nullptr` is a cycle sentinel inserted just before
+    // descending into children — if we see it, this node is already
+    // being computed on an ancestor stack frame and returning any real
+    // value would cause infinite recursion. Emit a width-correct zero
+    // constant to break the cycle; the eventual real value is written
+    // back to the cache when the outermost call completes.
+    if (existedIt->second == nullptr) {
+      uint32_t width = insContextStk.get_var_slice_width_simp(varAndSlice);
+      return llvmInt(0, width, c);
+    }
+    return existedIt->second;
   }
+
+  // Sentinel insert before recursion so any re-entry on the same
+  // (varAndSlice, timeIdx) hits the cycle-breaking branch above.
+  curDynData->existedExpr[curTgt].emplace(cacheKey, nullptr);
 
   llvm::Value* retExpr;
   if ( is_input(varAndSlice, curMod) ) { // input_t is always 0
@@ -783,9 +798,11 @@ UpdateFunctionGen::add_constraint(astNode* const node, uint32_t timeIdx, context
   else { // it is wire
     retExpr = add_ssa_constraint(node, timeIdx, c, b, bound);
   }
-  curDynData->existedExpr[curTgt].emplace(timed_name(varAndSlice, timeIdx), 
-                                          retExpr);
-  if (curMod->name == "T" && curTgt == "out" 
+  // Overwrite the cycle sentinel with the real value now that we're
+  // finished recursing. Any child that hit the sentinel already got
+  // a zero placeholder; the outermost call result is what we store.
+  curDynData->existedExpr[curTgt][cacheKey] = retExpr;
+  if (curMod->name == "T" && curTgt == "out"
        && varAndSlice == "in" && timeIdx == 1)
     toCoutVerb("push into expr!");
   return retExpr;

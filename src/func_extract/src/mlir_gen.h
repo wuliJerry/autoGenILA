@@ -65,6 +65,13 @@ private:
   std::map<astNode*, uint32_t> DIRTY_QUEUE;
   std::set<std::string> resetedReg;
 
+  // Cycle detection for add_constraint recursion. A timed-name that is
+  // currently being computed (its result not yet in namedValues) is
+  // tracked here; if we re-enter the same (var, time) pair we emit a
+  // zero placeholder to break the cycle. Cleared when the outermost
+  // call for a given key completes.
+  std::set<std::string> inProgressTimedNames;
+
   // Maps for tracking named values (replacing LLVM's ValueSymbolTable)
   std::map<std::string, mlir::Value> namedValues;
   // Maps for function arguments by name
